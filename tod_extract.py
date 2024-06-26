@@ -18,7 +18,7 @@ for target_dataset in datasets:
     package = requests.get(url, params = payload).json()
     assert package['success'] is True
 
-    #Write Package Data
+    #Write Package Data (Not Needed)
     file_path = os.path.join(target_dataset, "package_info.json")
     f = open(file_path, "w")
     f.write(json.dumps(package))
@@ -27,6 +27,8 @@ for target_dataset in datasets:
     for idx, resource in enumerate(package["result"]["resources"]):
 
         if not resource["datastore_active"]:
+            
+            #Get Resource Metadata
             url = base_url + "/api/3/action/resource_show?id=" + resource["id"]
             resource_metadata = requests.get(url).json()
             assert resource_metadata['success'] is True
@@ -41,4 +43,3 @@ for target_dataset in datasets:
             response = requests.get(url)
             f.write(response.content)
             f.close()
-
