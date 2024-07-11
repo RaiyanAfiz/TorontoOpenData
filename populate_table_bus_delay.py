@@ -20,19 +20,18 @@ db = mysql.connector.connect(
 
 myCursor = db.cursor()
 db_name = "toronto_open_data"
-tables = ["ttc_bus_delay_data", "ttc_subway_delay_data", "ttc_streetcar_delay_data"]
-
+table = "ttc_bus_delay_data"
+myCursor.execute("USE {}".format(db_name))
 
 #Insert Excel File Data
-folder = 'ttc_bus_delay_data'
-files = os.listdir(folder)
+files = os.listdir(table)
 
 for file in files:
     
-    if re.search("-readme", file):
-        print('This is read me')
+    if re.search("-readme", file) or re.search(".json", file):
+        continue
     else:
-        file_path = os.path.join(folder, file)
+        file_path = os.path.join(table, file)
         df_excel = pd.read_excel(file_path, sheet_name=None)
 
         for sheet_name, df in df_excel.items():
@@ -48,7 +47,7 @@ for file in files:
                             INSERT INTO {} 
                             (date, route, time, day, location, incident, min_delay, min_gap, direction, vehicle) 
                             VALUES ("{}", "{}", "{}", "{}", "{}", "{}", {}, {}, "{}", {})
-                        '''.format(t_name, *record)
+                        '''.format(table, *record)
                 # Print sequentially according to the loop
                 sqlQuery = sqlQuery.replace('\"nan\"', 'null').replace('nan', 'null')
 

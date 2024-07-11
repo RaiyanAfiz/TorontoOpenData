@@ -16,26 +16,61 @@ myCursor.execute("CREATE DATABASE IF NOT EXISTS {}".format(db_name))
 myCursor.execute("USE {}".format(db_name))
 
 #Create tables
-tables = ["ttc_bus_delay_data", "ttc_subway_delay_data", "ttc_streetcar_delay_data"]
+tables = ["ttc_bus_delay_data", "ttc_streetcar_delay_data", "ttc_subway_delay_data"]
 
-for table in tables:
+myCursor.execute('''
+                    CREATE TABLE IF NOT EXISTS {}
+                    (
+                        incident_id INT NOT NULL AUTO_INCREMENT, 
+                        date DATE,
+                        route VARCHAR(255),
+                        time TIME,
+                        day CHAR(10),
+                        location VARCHAR(255),
+                        incident VARCHAR(255),
+                        min_delay INT,
+                        min_gap INT,
+                        direction VARCHAR(255),
+                        vehicle INT,
+                        PRIMARY KEY(incident_id)
+                    )
+                '''.format(tables[0]))
 
-    myCursor.execute('''CREATE TABLE IF NOT EXISTS {}
-                        (
-                            incident_id INT NOT NULL AUTO_INCREMENT, 
-                            date DATE,
-                            route VARCHAR(255),
-                            time TIME,
-                            day CHAR(10),
-                            location VARCHAR(255),
-                            incident VARCHAR(255),
-                            min_delay INT,
-                            min_gap INT,
-                            direction VARCHAR(255),
-                            vehicle INT,
-                            PRIMARY KEY(incident_id)
-                        )
-                    '''.format(table))
+myCursor.execute('''
+                    CREATE TABLE IF NOT EXISTS {}
+                    (
+                        incident_id INT NOT NULL AUTO_INCREMENT, 
+                        date DATE,
+                        route VARCHAR(255),
+                        time TIME,
+                        day CHAR(10),
+                        location VARCHAR(255),
+                        incident VARCHAR(255),
+                        min_delay INT,
+                        min_gap INT,
+                        direction VARCHAR(255),
+                        vehicle INT,
+                        PRIMARY KEY(incident_id)
+                    )
+                '''.format(tables[1]))
+
+myCursor.execute('''
+                    CREATE TABLE IF NOT EXISTS {}
+                    (
+                        incident_id INT NOT NULL AUTO_INCREMENT, 
+                        date DATE,
+                        time TIME,
+                        day CHAR(10),
+                        station VARCHAR(255),
+                        delay_code CHAR(15),
+                        min_delay INT,
+                        min_gap INT,
+                        bound CHAR(10),
+                        line CHAR(10),
+                        vehicle INT,
+                        PRIMARY KEY(incident_id)
+                    )
+                '''.format(tables[2]))
 
 #Close Connections
 db.commit()

@@ -3,7 +3,7 @@ import os
 import json
 
 
-datasets = ["ttc_bus_delay_data", "ttc_subway_delay_data", "ttc_streetcar_delay_data"]
+datasets = ["ttc_bus_delay_data", "ttc_streetcar_delay_data", "ttc_subway_delay_data"]
 
 for target_dataset in datasets:
 
