@@ -37,6 +37,11 @@ for file in files:
         for sheet_name, df in df_excel.items():
             if df.empty:
                 continue
+
+            if df.shape[1] > 10:
+                df.drop(df.columns[5], axis=1, inplace=True)
+                print(df)
+
             for i, row in df.iterrows():
                 record = list(row)
                 CleanData()

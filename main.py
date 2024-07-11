@@ -17,8 +17,6 @@ if p.returncode != 0:
     print(err)
 print("Data downloaded in {} sec".format(time.time() - start_time))
 
-input("Delete ttc-bus-delay-data-2019, sheet Apr 2019, column Incident ID: ")
-input("Delete ttc-streetcar-delay-data-2019, sheet Apr 2019, column Incident ID: ")
 
 #Create Database
 start_time = time.time()
@@ -31,8 +29,8 @@ if p.returncode != 0:
     print(err)
 print("Database created in {} sec".format(time.time() - start_time))
 
-#Populate tables
 
+#Populate tables
 start_time = time.time()
 print("Populating table bus_delay_data...")
 p = subprocess.Popen(["python", "populate_table_bus_delay.py", host, user, password])
