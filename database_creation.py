@@ -66,7 +66,7 @@ myCursor.execute('''
                         min_delay INT,
                         min_gap INT,
                         bound CHAR(10),
-                        line CHAR(10),
+                        line VARCHAR(255),
                         vehicle INT,
                         PRIMARY KEY(incident_id)
                     )

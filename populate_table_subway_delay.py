@@ -7,9 +7,6 @@ import sys
 def CleanData():
     record[0] = str(record[0]).replace('00:00:00', '').strip()
     record[1] = str(record[1])
-    record[2] = str(record[2])
-    record[4] = str(record[4]).replace('\\', '-').replace('\"', '\'')
-    record[8] = str(record[8]).replace('\\', '-').replace('\"', '\'')
 
 
 db = mysql.connector.connect(
@@ -20,7 +17,7 @@ db = mysql.connector.connect(
 
 myCursor = db.cursor()
 db_name = "toronto_open_data"
-table = "ttc_streetcar_delay_data"
+table = "ttc_subway_delay_data"
 myCursor.execute("USE {}".format(db_name))
 
 #Insert Excel File Data
@@ -28,7 +25,7 @@ files = os.listdir(table)
 
 for file in files:
     
-    if re.search("-readme", file) or re.search(".json", file):
+    if re.search("-readme", file) or re.search(".json", file) or re.search("-codes", file):
         continue
     else:
         file_path = os.path.join(table, file)
@@ -45,8 +42,8 @@ for file in files:
                 # insert table data
                 sqlQuery = '''
                             INSERT INTO {} 
-                            (date, route, time, day, location, incident, min_delay, min_gap, direction, vehicle) 
-                            VALUES ("{}", "{}", "{}", "{}", "{}", "{}", {}, {}, "{}", {})
+                            (date, time, day, station, delay_code, min_delay, min_gap, bound, line, vehicle) 
+                            VALUES ("{}", "{}", "{}", "{}", "{}", {}, {}, "{}", "{}", {})
                         '''.format(table, *record)
                 # Print sequentially according to the loop
                 sqlQuery = sqlQuery.replace('\"nan\"', 'null').replace('nan', 'null')

@@ -34,7 +34,7 @@ print("Database created in {} sec".format(time.time() - start_time))
 #Populate tables
 
 start_time = time.time()
-print("Populating table bus_delay_data")
+print("Populating table bus_delay_data...")
 p = subprocess.Popen(["python", "populate_table_bus_delay.py", host, user, password])
 p.wait()
 out, err = p.communicate()
@@ -45,8 +45,18 @@ print("Tables populated in {} sec".format(time.time() - start_time))
 
 
 start_time = time.time()
-print("Populating table streetcar_delay_data")
+print("Populating table streetcar_delay_data...")
 p = subprocess.Popen(["python", "populate_table_streetcar_delay.py", host, user, password])
+p.wait()
+out, err = p.communicate()
+if p.returncode != 0:
+    print(out)
+    print(err)
+print("Tables populated in {} sec".format(time.time() - start_time))
+
+start_time = time.time()
+print("Populating table subway_delay_data...")
+p = subprocess.Popen(["python", "populate_table_subway_delay.py", host, user, password])
 p.wait()
 out, err = p.communicate()
 if p.returncode != 0:
