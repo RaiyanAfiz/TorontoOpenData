@@ -7,15 +7,15 @@ user = "root"
 password = ""
 
 #Get data
-# start_time = time.time()
-# print("Downloading TTC data...")
-# p = subprocess.Popen(["python", "tod_extract.py"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-# p.wait()
-# out, err = p.communicate()
-# if p.returncode != 0:
-#     print(out)
-#     print(err)
-# print("Data downloaded in {} sec".format(time.time() - start_time))
+start_time = time.time()
+print("Downloading TTC data...")
+p = subprocess.Popen(["python", "data_download.py"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+p.wait()
+out, err = p.communicate()
+if p.returncode != 0:
+    print(out)
+    print(err)
+print("Data downloaded in {} sec".format(time.time() - start_time))
 
 input("Delete ttc-bus-delay-data-2019, sheet Apr 2019, column Incident ID: ")
 input("Delete ttc-streetcar-delay-data-2019, sheet Apr 2019, column Incident ID: ")
@@ -57,6 +57,16 @@ print("Tables populated in {} sec".format(time.time() - start_time))
 start_time = time.time()
 print("Populating table subway_delay_data...")
 p = subprocess.Popen(["python", "populate_table_subway_delay.py", host, user, password])
+p.wait()
+out, err = p.communicate()
+if p.returncode != 0:
+    print(out)
+    print(err)
+print("Tables populated in {} sec".format(time.time() - start_time))
+
+start_time = time.time()
+print("Populating metadata tables...")
+p = subprocess.Popen(["python", "misc_table_population.py", host, user, password])
 p.wait()
 out, err = p.communicate()
 if p.returncode != 0:

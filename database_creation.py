@@ -72,6 +72,29 @@ myCursor.execute('''
                     )
                 '''.format(tables[2]))
 
+
+tables = ["bus_delay_data_dict", "streetcar_delay_data_dict", "subway_delay_data_dict"]
+for table in tables:
+    myCursor.execute('''
+                        CREATE TABLE IF NOT EXISTS {}
+                        (
+                            field_name CHAR(15),
+                            description VARCHAR(10000),
+                            example CHAR(50),
+                            PRIMARY KEY(field_name)
+                        )
+                    '''.format(table))
+
+myCursor.execute('''
+                    CREATE TABLE IF NOT EXISTS {}
+                    (
+                        sub_code CHAR(15),
+                        description VARCHAR(255),
+                        PRIMARY KEY(sub_code)
+                    )
+                '''.format("sub_code"))
+
+
 #Close Connections
 db.commit()
 db.close()
