@@ -3,7 +3,7 @@ import os
 import json
 
 
-datasets = ["ttc_bus_delay_data", "ttc_streetcar_delay_data", "ttc_subway_delay_data"]
+datasets = ["ttc-bus-delay-data", "ttc-streetcar-delay-data", "ttc-subway-delay-data"]
 
 for target_dataset in datasets:
 
@@ -43,3 +43,7 @@ for target_dataset in datasets:
             response = requests.get(url)
             f.write(response.content)
             f.close()
+
+os.rename('ttc-bus-delay-data', 'ttc_bus_delay_data')
+os.rename('ttc-streetcar-delay-data', 'ttc_streetcar_delay_data')
+os.rename('ttc-subway-delay-data', 'ttc_subway_delay_data')
