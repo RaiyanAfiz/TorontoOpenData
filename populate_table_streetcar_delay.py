@@ -38,9 +38,10 @@ for file in files:
             if df.empty:
                 continue
             
-            if df.shape[1] > 10:
-                df.drop(df.columns[5], axis=1, inplace=True)
-                print(df)
+            try:
+                df.drop("Incident ID", axis=1, inplace=True)
+            except Exception as e:
+                ''
 
             for i, row in df.iterrows():
                 record = list(row)
